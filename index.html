@@ -25,12 +25,16 @@
             padding: 20px;
             background: url("/img/Picsart_24-08-25_10-07-45-476.jpg") no-repeat center;
             background-size: cover;
+            position: relative;
         }
 
         #header img {
             width: 80px;
+            height: 80px;
             border-radius: 50%;
             border: 2px solid #00FFB9;
+            display: block;
+            margin: 0 auto;
         }
 
         #header p {
@@ -85,62 +89,8 @@
             color: #777;
         }
 
-        /* Music Grid Styling */
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 10px;
-            padding: 7px;
-            margin: 0 auto;
-            width: 95%;
-        }
-
-        .music-grid .audio-container {
-            position: relative;
-            background: linear-gradient(135deg, #00FFB9, #006a6a);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 185, 0.5);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .music-grid .audio-container:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(0, 255, 185, 0.8);
-        }
-
-        .music-grid .audio-container:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -50%;
-            width: 200%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,255,185,0.1), transparent);
-            animation: rotateGlow 5s linear infinite;
-        }
-
-        @keyframes rotateGlow {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .music-grid audio {
-            width: 100%;
-            height: 50px;
-            z-index: 1;
-            position: relative;
-            border-radius: 10px;
-            outline: none;
-        }
-
         /* Modal Styling */
-        #musicModal {
+        #photosModal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -161,6 +111,7 @@
             width: 80%;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 255, 185, 0.5);
+            text-align: center;
         }
 
         .close {
@@ -168,6 +119,7 @@
             float: right;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .close:hover,
@@ -175,6 +127,24 @@
             color: #00A8A8;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 185, 0.5);
         }
 
         .music-button {
@@ -194,111 +164,141 @@
         .music-button:hover {
             background-color: #00A8A8;
         }
+
+        #passwordPrompt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #passwordPrompt form {
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 20px;
+            border: 2px solid #00FFB9;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 185, 0.5);
+        }
+
+        #passwordPrompt input[type="password"] {
+            padding: 10px;
+            width: 60%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #00FFB9;
+            background-color: #1A1A1A;
+            color: #00FFB9;
+        }
+
+        #passwordPrompt input[type="submit"] {
+            background-color: #00FFB9;
+            color: #0A0A0A;
+            padding: 10px;
+            width: 40%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
     </style>
 </head>
 <body>
 
-<div id="header" class="section">
-    <img src="/img/Picsart_24-08-18_18-44-11-013.jpg" alt="Codeflash">
-    <p>Glenn Sam Evangelio</p>
-    <button class="music-button" id="musicBtn">My Music</button>
-</div>
-
-<div class="section">
-    <h2>About Me</h2>
-    <p>I'm Glenn Sam Evangelio, a passionate web developer with a love for creating futuristic, user-friendly websites. I enjoy exploring new technologies and constantly improving my skills in HTML, CSS, and JavaScript. Let's connect and build something awesome together!</p>
-</div>
-
-<div class="section">
-    <p>HTML</p>
-    <progress value="90" max="100"></progress>
-    <p>CSS</p>
-    <progress value="80" max="100"></progress>
-    <p>JavaScript</p>
-    <progress value="60" max="100"></progress>
-</div>
-
-<div class="section">
-    <form action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="3e4f758d-de26-4bd1-96d6-6f4c005d757f">
-        <input type="hidden" name="redirect" value="https://web3forms.com/success">
-        <h2>Contact</h2>
-        <input type="text" name="Username" placeholder="Username" required><br>
-        <input type="email or phone" name="email or phone" placeholder="Email or phone" required><br>
-        <textarea name="message" placeholder="Message" required></textarea><br>
-        <input type="submit" class="submit" value="Send">
+<div id="passwordPrompt">
+    <form id="passwordForm">
+        <h2>Enter Password</h2>
+       <a href="https://www.facebook.com/profile.php?id=100084911114022">message me to get password</a>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="submit" value="Submit">
     </form>
 </div>
 
-<!-- Music Modal Section -->
-<div id="musicModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>My Music</h2>
-        <div class="music-grid">
-            <!-- Music 1 -->
-            <div class="audio-container">
-                <audio controls>
-                    <source src="/music/Ghost - Mary On A Cross.mp3" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
+<div id="content" style="display:none;">
+    <div id="header" class="section">
+        <img src="/img/Picsart_24-08-18_18-44-11-013.jpg" alt="Codeflash">
+        <p>Glenn Sam Evangelio</p>
+        <button class="music-button" id="photosBtn">Photos</button>
+    </div>
+
+    <div class="section">
+        <h2>About Me</h2>
+        <p>I'm Glenn Sam Evangelio, a passionate web developer with a love for creating futuristic, user-friendly websites. I enjoy exploring new technologies and constantly improving my skills in HTML, CSS, and JavaScript. Let's connect and build something awesome together!</p>
+    </div>
+
+    <div class="section">
+        <p>HTML 90%</p>
+        <progress value="90" max="100"></progress>
+        <p>CSS 80%</p>
+        <progress value="80" max="100"></progress>
+        <p>JavaScript 70%</p>
+        <progress value="60" max="100"></progress>
+    </div>
+
+    <div class="section">
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="3e4f758d-de26-4bd1-96d6-6f4c005d757f">
+            <input type="hidden" name="redirect" value="https://web3forms.com/success">
+            <h2>Contact</h2>
+            <input type="text" name="Username" placeholder="Username" required><br>
+            <input type="email or phone" name="email or phone" placeholder="Email or Phone" required><br>
+            <textarea name="message" placeholder="Message" required></textarea><br>
+            <input type="submit" class="submit" value="Send">
+        </form>
+    </div>
+
+    <!-- Photos Modal Section -->
+    <div id="photosModal">
+        <div class="modal-content">
+            <span class="close">X</span>
+            <h2>My Photos</h2>
+            <div class="photo-grid">
+                <img src="/img/Picsart_24-08-29_14-22-37-743.jpg" alt="Photo 1">
+                <img src="/img/Picsart_24-08-26_07-21-44-443_transcpr.jpg" alt="Photo 2">
+                <img src="/img/Picsart_24-09-20_13-32-33-673.jpg" alt="Photo 3">
+                <img src="/img/Picsart_24-08-18_18-44-11-013.jpg"alt="Photo 4">
             </div>
-            <!-- Music 2 -->
-            <div class="audio-container">
-                <audio controls>
-                    <source src="music/song2.mp3" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <!-- Music 3 -->
-            <div class="audio-container">
-                <audio controls>
-                    <source src="/music/HEADS WILL ROLL (PR FUNK).mp3" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <!-- Music 4 -->
-            <div class="audio-container">
-                <audio controls>
-                    <source src="music/song4.mp3" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <!-- Music 5 -->
-            <div class="audio-container">
-                <audio controls>
-                    <source src="music/song5.mp3" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio</div>
         </div>
     </div>
+
+    <footer>
+       <p>&copy;GSE2005</p>
+    </footer>
 </div>
 
-<footer>
-    <p>&copy;GSE2005</p>
-</footer>
-
 <script>
-    // Get the modal
-    var modal = document.getElementById("musicModal");
+    // Password protection logic
+    document.getElementById("passwordForm").onsubmit = function(event) {
+        event.preventDefault(); // Prevent form submission
+        var password = document.getElementById("password").value;
+        
+        // Set your desired password here
+        if (password === "Web123") {
+            document.getElementById("passwordPrompt").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        } else {
+            alert("Incorrect password. Try again.");
+        }
+    };
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("musicBtn");
-
-    // Get the <span> element that closes the modal
+    // Modal logic for photos
+    var modal = document.getElementById("photosModal");
+    var btn = document.getElementById("photosBtn");
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal 
     btn.onclick = function() {
         modal.style.display = "block";
     }
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
